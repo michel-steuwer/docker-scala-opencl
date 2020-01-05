@@ -1,7 +1,5 @@
 FROM  openjdk:8
 
-MAINTAINER Michel Steuwer (michel.steuwer@glasgow.ac.uk)
-
 ENV SCALA_VERSION 2.12.10
 ENV SBT_VERSION 1.3.5
 
