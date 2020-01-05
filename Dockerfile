@@ -3,9 +3,6 @@ FROM  openjdk:8
 ENV SCALA_VERSION 2.12.10
 ENV SBT_VERSION 1.3.5
 
-# Scala expects this file
-RUN touch /usr/lib/jvm/java-8-openjdk-amd64/release
-
 # Install Scala
 ## Piping curl directly in tar
 RUN \
@@ -24,12 +21,8 @@ RUN \
 
 # Install OpenCL
 RUN \
-  echo "deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-8 main" >> /etc/apt/sources.list && \
-  echo "deb-src http://apt.llvm.org/jessie/ llvm-toolchain-jessie-8 main" >> /etc/apt/sources.list && \
-  wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key| apt-key add - && \
-  apt-get update && apt-get install -y clang-8 cmake software-properties-common && \
-  ln -s /usr/bin/clang-8 /usr/bin/clang && \
-  ln -s /usr/bin/clang++-8 /usr/bin/g++ && \
+  apt-get update && apt-get install -y cmake software-properties-common && \
   apt-add-repository non-free && \
   apt-get update && \
-  apt-get install -y amd-opencl-dev
+  apt-get install -y pocl-opencl-icd clinfo && \
+  clinfo
