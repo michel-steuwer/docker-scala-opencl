@@ -19,10 +19,22 @@ RUN \
   apt-get install sbt && \
   sbt sbtVersion
 
+# Install build tools
+RUN \
+  apt-get update && \
+  apt-get install -y cmake software-properties-common g++ clang-7 libxtst6 libxrender1 libxext6 && \
+  ln -s /usr/bin/clang-7 /usr/bin/clang && \
+  ln -s /usr/bin/clang-cpp-7 /usr/bin/clang++
+
+# Copy AMD APP SDK into container
+COPY AMD-APP-SDKInstaller-v3.0.130.136-GA-linux64.tar.bz2 /data/AMD-APP-SDKInstaller-v3.0.130.136-GA-linux64.tar.bz2
+
 # Install OpenCL
 RUN \
-  apt-get update && apt-get install -y cmake software-properties-common && \
-  apt-add-repository non-free && \
-  apt-get update && \
-  apt-get install -y pocl-opencl-icd clinfo && \
+  cd /data && \
+  tar xf AMD-APP-SDKInstaller-v3.0.130.136-GA-linux64.tar.bz2 && \
+  ./AMD-APP-SDK-v3.0.130.136-GA-linux64.sh -- -s true -a yes && \
+  export LD_LIBRARY_PATH="/opt/AMDAPPSDK-3.0/lib/x86_64/sdk/:/opt/AMDAPPSDK-3.0/lib/x86_64/:$LD_LIBRARY_PATH" && \
   clinfo
+
+ENV LD_LIBRARY_PATH="/opt/AMDAPPSDK-3.0/lib/x86_64/sdk/:/opt/AMDAPPSDK-3.0/lib/x86_64/:$LD_LIBRARY_PATH"
