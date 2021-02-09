@@ -1,7 +1,7 @@
 FROM  openjdk:8
 
-ENV SCALA_VERSION 2.12.10
-ENV SBT_VERSION 1.3.5
+ENV SCALA_VERSION 2.13.3
+ENV SBT_VERSION 1.3.13
 
 # Install Scala
 ## Piping curl directly in tar
