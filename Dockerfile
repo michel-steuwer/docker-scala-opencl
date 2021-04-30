@@ -37,6 +37,11 @@ RUN \
   export LD_LIBRARY_PATH="/opt/AMDAPPSDK-3.0/lib/x86_64/sdk/:/opt/AMDAPPSDK-3.0/lib/x86_64/:$LD_LIBRARY_PATH" && \
   clinfo
 
+# Install Hypermapper
+RUN \
+  apt-get install -y python3-pip && \
+  pip3 install hypermapper 
+
 
 ENV LIBRARY_PATH="/opt/AMDAPPSDK-3.0/lib/x86_64/sdk/:/opt/AMDAPPSDK-3.0/lib/x86_64/:$LIBRARY_PATH"
 ENV LD_LIBRARY_PATH="/opt/AMDAPPSDK-3.0/lib/x86_64/sdk/:/opt/AMDAPPSDK-3.0/lib/x86_64/:$LD_LIBRARY_PATH"
